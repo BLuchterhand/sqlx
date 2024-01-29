@@ -1,3 +1,4 @@
+//go:build go1.8
 // +build go1.8
 
 package sqlx
@@ -314,6 +315,12 @@ func (tx *Tx) PreparexContext(ctx context.Context, query string) (*Stmt, error) 
 // PrepareNamedContext returns an sqlx.NamedStmt
 func (tx *Tx) PrepareNamedContext(ctx context.Context, query string) (*NamedStmt, error) {
 	return prepareNamedContext(ctx, tx, query)
+}
+
+// NamedQueryContext using this DB.
+// Any named placeholder parameters are replaced with fields from arg.
+func (tx *Tx) NamedQueryContext(ctx context.Context, query string, arg interface{}) (*Rows, error) {
+	return NamedQueryContext(ctx, tx, query, arg)
 }
 
 // MustExecContext runs MustExecContext within a transaction.
